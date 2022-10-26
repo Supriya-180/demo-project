@@ -1,0 +1,55 @@
+
+<style>
+  #button {
+  color: black;
+  background-color: lightblue;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: left;
+  text-align: left;
+  height: 2em;
+  width: 7em;
+  font-size: medium;
+  font-weight: 60;
+  //margin: 3px;
+  text-decoration: none;
+  padding: 5px;
+}
+
+</style>
+
+<h3 align="right"><%= link_to 'back', home_index_path %></h3>
+<h2>all orders</h2>
+<% @order_items.each do |c| %>
+  <div class="column">
+    <%if c.product.image.present?%>
+       <%= image_tag c.product.image, :size => "100x150" %>
+    <%end%>
+  </div>      
+  
+  <div class="column">
+    <h4>price = <%= c.total_price%></h4>
+    <h4> product id = <%= c.product_id%><br></h4>
+    <h4>name = <%= c.product.name%></h4>
+    <h4>product_quantity =<%= c.product_quantity%></h4>
+    <h3>created_at =<%= c.created_at%></h3>
+    <h3><strong>status = <%= c.order.status%></strong></h3>
+    <%#byebug%>
+     
+
+    
+  <%= link_to "show details of order ", show_order_item_order_path(c.id)%>
+  <h4 id="button"><%= link_to "cancel order", cancel_order_order_path(c.order_id),
+                  method: :patch,
+                  data: { confirm: "Are you sure?" } %></h4>
+
+  <%#= link_to "pay ", pay_order_Path%>
+  </div><br>
+
+<%end %>  
+
+
+    
+
+

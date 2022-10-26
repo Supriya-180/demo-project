@@ -1,0 +1,68 @@
+
+<%= form_with model:@product do |f| %>
+
+  <div>
+    <%= f.label :category_id %><br>
+    <%= f.select :category_id, options_for_select(Category.all.map{|b| [b.name, b.id]}) %><br>
+
+        <% @product.errors.full_messages_for(:category_id).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+    <% @product.errors.full_messages_for(:name).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= f.label :price %><br>
+    <%= f.text_field :price %>
+    <% @product.errors.full_messages_for(:price).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= f.label :manufacturing_date %><br>
+    <%= f.date_field :manufacturing_date %>
+    <% @product.errors.full_messages_for(:manufacturing_date).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= f.label :image %><br>
+    <%= f.file_field :image, accept: 'image/png, image/gif, image/jpeg, image/jpg'%>
+    <% @product.errors.full_messages_for(:image).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+
+  <div>  
+    <fieldset>
+        <legend>product variant_attributes:</legend>
+        <%= f.fields_for :product_variants do |variant_form| %>
+            <%= render "product_variant_fields", f: variant_form %> 
+        <% end %>
+        <%= link_to_add_fields "Add product variants", f, :product_variants %>
+    </fieldset>
+  </div>
+
+
+
+
+
+  <div>
+    <%= f.submit %>
+  </div>
+
+
+<% end %>
+
+
+

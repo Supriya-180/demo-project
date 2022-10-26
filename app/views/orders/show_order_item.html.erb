@@ -1,0 +1,29 @@
+<h2>detail of my order</h2>
+<%if @order_item.product.image.present?%>
+    <%= link_to product_path(@order_item.product_id) do%>
+      <%= image_tag @order_item.product.image %></a>
+    <%end%>
+<% end %>
+
+<h3>price of product = <%= @order_item.total_price %> </h3>
+<h3>quantity of prduct = <%= @order_item.product_quantity %> </h3>
+<h3>manufacturing date of product = <%= @order_item.product.manufacturing_date %> </h3>
+<h3> ordered date = <%= @order_item.created_at%></h3>
+<%#= link_to "show products ", product_path(@order_item.product_id)%>
+<%if @address.present?%>
+   <h3> address of user =<strong><%= @address.flat_no%>, <%= @address.colony%>, <%= @address.landmark%>, <%= @address.city%>, <%= @address.pin_Code%></strong></h3>
+<%end%>
+
+
+
+<% @order_items.each do |c| %>
+  <div>
+    <%if c.product.image.present?%>
+      <%= link_to show_order_item_order_path(c.id) do %>
+        <%= image_tag c.product.image, :size => "100x150" %>
+      <% end %>
+       <%#=link_to image_tag (c.product.image), :size => "100x150"%>
+       <%#= link_to "more", show_order_item_order_path(c.id) %>
+    <%end%>
+  </div>  
+<%end%>

@@ -1,0 +1,22 @@
+<% @products.each do |wl|%>
+
+        <div class="row" style="margin-right:200px;margin-left:50px; padding-left: 100px;">
+                <div class="column">
+                        <% if wl.image.present?%>
+                                <%=image_tag wl.image%>
+                        <%end%>
+                </div>
+
+
+                <div class="column">
+                        <h2><%= wl.name %></h2>
+            
+                        <h3 class="price">$<%= wl.price %></h3>
+
+                        <h4 class="button"><%= link_to "Destroy", wishlist_path(wl.id), method: :delete, data: { confirm: "Are you sure?" } %></h4>
+                </div>
+        </div><br><br><br>
+
+  <% end %>
+
+  <!-- border: solid; border-color: powderblue; border-radius: 5px; -->

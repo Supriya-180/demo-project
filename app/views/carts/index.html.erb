@@ -1,0 +1,71 @@
+<style>
+    .pp {
+    color: red;
+    }
+</style>
+
+
+<center>
+    <h3 class="pp"><%= flash[:error]%> </h3>
+    <h2>User Cart</h2>
+
+<% if @carts.present? %>
+<div class="row">
+   <% if @cart_item.present? %>
+      <% @cart_item.each do |c| %>  
+         <div class="column">
+ 	     	     <%if c.product.image.present?%>
+                 <%= image_tag c.product.image, :size => "100x150" %>
+              <%end%>
+         </div>
+         
+         <div class="column">
+            <h4>price = <%= c.total_price%></h4>
+            <h4> product id = <%= c.product_id%><br></h4>
+            <h4>name = <%= c.product.name%></h4>
+             <%#= c.product_quantity%>
+
+                   <%= form_with url: cart_update_cart_path(cart_id: c), method: "post" do |form| %>
+                        <h4>
+                        quantity = <%= form.number_field :product_quantity, :value => c.product_quantity %>
+                        <br></h4>
+                      <%= form.submit %>
+                   <% end %>
+                   <%#byebug%>
+           <h4><%= link_to "Destroy", destroy_cart_item_cart_path(c.id),
+                  method: :delete,
+                  data: { confirm: "Are you sure?" } %></h4>
+         </div><br>
+
+      <%end %>     
+   <%end %>
+</div><br><br>
+<%#byebug%>
+<% if @cart_item.present?%>
+     <h3><strong>total price = </strong><%= @carts.total_price %></h3>
+     <h3><strong>total quantity = </strong> <%= @carts.total_quantity%></h3>
+ <% end %>
+
+<%end %>
+<br>
+<br>
+<br>
+</center>
+
+<% if @cart_item.present?%>
+    <%= form_with url: place_order_orders_path, method: "post" do |form| %>
+        <% @addresses.each do |address| %>
+            <h4>
+                <%= form.radio_button :address_id, address.id %> 
+                <label><%= address.flat_no %>, <%= address.colony %>,  <%= address.landmark %>, <%= address.city %>, <%= address.pin_Code %></label>
+            </h4>
+        <% end %>
+        <%= form.submit  "place order"%>
+
+    <% end %>
+<%end%>
+
+
+<h3 align="right"><div style="text-indent: 1300px;"><%= link_to 'new address for user', new_address_path%></div></h3>
+<h3 align="right"><%#= link_to 'place order', place_order_orders_path%></h3>
+<h3 align="right"><%= link_to 'back', home_index_path %></h3> 

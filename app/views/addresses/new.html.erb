@@ -1,0 +1,51 @@
+<h1>new address of user</h1>
+
+<%= form_with model:@address, method: "post" do |f| %>
+
+  <div>
+    <%= f.label :pin_Code %><br>
+    <%= f.text_field :pin_Code %>
+    <% @address.errors.full_messages_for(:pin_Code).each do |message| %>
+        <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= f.label :flat_no %><br>
+    <%= f.text_field :flat_no %>
+    <% @address.errors.full_messages_for(:flat_no).each do |message| %>
+        <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= f.label :colony %><br>
+    <%= f.text_field :colony %>
+    <% @address.errors.full_messages_for(:colony).each do |message| %>
+       <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= f.label :landmark %><br>
+    <%= f.text_field :landmark %>
+    <% @address.errors.full_messages_for(:landmark).each do |message| %>
+        <div><%= message %></div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= f.label :city %><br>
+    <%= f.text_field :city %>
+    <% @address.errors.full_messages_for(:city).each do |message| %>
+        <div><%= message %></div>
+    <% end %>
+  </div>
+
+
+  <div>
+    <%= f.submit %>
+  </div>
+
+
+<% end %>

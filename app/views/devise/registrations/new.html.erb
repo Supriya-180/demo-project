@@ -1,0 +1,81 @@
+<style>
+  .reg{
+    background-color: #ebebe0;
+    margin: 100px;
+    border-style: solid ;
+    border-color: #afa9a8;
+    border-radius: 15px;
+    //align-items: center;
+    //width: 1000px;
+    margin: 100px;
+  }
+
+  .ss{
+    margin-left: 150px;
+    margin-bottom: 15px;
+    margin-right: 10px;
+  }
+</style>
+<div class="reg">
+
+  <h2 align="center">Sign up</h2>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="ss">
+        <%= f.label :email %><br/>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+      </div>
+
+      <div class="ss">
+        <%= f.label :password %>
+        <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %><br />
+        <%= f.password_field :password, autocomplete: "new-password" %>
+      </div>
+
+      <div class="ss">
+        <%= f.label :password_confirmation %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+      </div>
+
+      <div class="ss">
+        <%= f.label :name %><br />
+        <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+      </div>
+
+      <div class="ss">
+        <%= f.label :phone_number %><br />
+        <%= f.text_field :phone_number, autofocus: true, autocomplete: "phone_number" %>
+      </div>
+
+
+      <div class="ss">
+        <%= f.label :gender %><br />
+        <%= f.radio_button :gender, "male" %> <%= f.label :male %>
+        <%= f.radio_button :gender, "female" %> <%= f.label :female %>
+      </div>
+
+      <div class="ss">
+        <%= f.label :user_type %><br />
+        <%#= f.text_field :user_type, autofocus: true, autocomplete: "user_type" %>
+      
+        <%= f.select :user_type, ['merchant', 'customer'], selected: 'customer' %>
+      </div>
+
+
+      <div class="ss" class="field">
+        <%= f.label :validity %><br />
+        <%= f.check_box :validity, autofocus: true, autocomplete: "validity" %>
+      </div>
+
+      <div class="ss" class="actions">
+        <%= f.submit "Sign up" %>
+      </div>
+    <% end %>
+
+  <%= render "devise/shared/links" %>
+</div>
+  <%#= form.select :payment_type, options_for_select(Vendor.payment_types.map {|key, value| [key.titleize, Vendor.payment_types.key(value)]}, @vendor.payment_type) %>

@@ -1,0 +1,72 @@
+// Place all the styles related to the home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    grid-gap: 70px;
+    margin:70px ;
+}
+
+.card {
+    display: grid;
+    grid-template-rows: max-content 20px 1fr;
+    border: solid;
+    border-radius:20px;
+    border-color: #DCDCDC;
+    padding: 30px;
+    
+}
+
+.im {
+    object-fit: cover;
+    width: 10%;
+    height: 10%;
+}
+
+
+
+.button{
+  color: black;
+  background-color: PowderBlue;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: left;
+  text-align: left;
+  height: 2em;
+  width: 7em;
+  font-size: medium;
+  font-weight: 60;
+  //margin: 3px;
+  text-decoration: none;
+  padding: 5px;
+ 
+}
+
+
+a, a:link, a:visited {
+  color: #00070c;
+  text-decoration: none;
+  }
+
+
+.button2{
+  color: black;
+  background-color: PaleGreen;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2em;
+  width: 7em;
+  font-size: medium;
+  font-weight: 60;
+}
+
+.name{
+    text-align: center;
+}
+

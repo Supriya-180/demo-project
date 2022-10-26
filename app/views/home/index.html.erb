@@ -1,0 +1,58 @@
+
+<h3 class="mess"><%= flash[:message]%></h3>
+<h3 class="mess"><%= flash[:wishlist]%></h3>
+
+<h3 class="pp"><%= flash[:alert]%> </h3>
+<center><h2>products</h2></center>
+
+
+<div class="cards">
+  <% @products.each do |hommme|%>
+
+    <article class="card">
+        <div class ="im">
+        <% if hommme.image.present? %>
+            <%= image_tag hommme.image, :size => "230x200" %> 
+        <% end %>
+        <h2 class="name"><%= hommme.name %></h2>
+    
+        <h3 class="price">$<%= hommme.price %></h3>
+    
+        <div class="button" id="but"><a href="<%= product_path(hommme.id) %>"><%= "more details"%></a>  </div><br><br>
+        <%#= button_to "more details", home_path(hommme.id)%>
+        
+        <div class="button2">
+            <% if current_user.user_type != "merchant"%>
+                <%#byebug%>
+                <%#if CartItem.find_by(product_id: params[:id]).cart.present?%>
+                    <a href="<%= home_add_to_cart_path(hommme.id) %>"><%= "add to cart"%></a><br><br>
+
+                <%#end%>
+            <%end%>
+
+
+            <% if current_user.user_type == "merchant"%>
+                <%= link_to "Destroy", hommme, method: :delete, data: { confirm: "Are you sure?" } %>
+            <%end%>
+        </div>
+        <%#byebug%>
+            <% if current_user.likes.where(likeable_id: hommme.id, likeable_type: "Product").present?%>
+                <%= link_to home_like_path(hommme.id), method: :post do%>
+                    <h3 style="margin-left: 201px;"><%= image_tag "/assets/like.png", :size => "30x30" %></h3>
+                <%end%>
+            <%else%>
+                <%= link_to home_like_path(hommme.id), method: :post do%>
+                    <h3 style="margin-left: 201px;"><%= image_tag "/assets/like1.png", :size => "30x30" %></h3>
+                <%end%>
+            <%end%>
+        </div>
+    </article>
+  <% end %>
+
+</div>
+
+
+
+
+    
+    
