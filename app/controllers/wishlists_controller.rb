@@ -9,7 +9,8 @@ class WishlistsController < ApplicationController
 	end
 
     def destroy
-    	# byebug
+    	
+    	
     	@like = current_user.likes.find_by(likeable_id: params[:id],likeable_type: "Product")
     	@like.destroy
     	redirect_to home_index_path
