@@ -1,0 +1,116 @@
+<style>
+  .com{
+    border: solid; 
+    border-color:#967a7a; 
+    border-radius: 4px;
+    margin-left: 90px;
+    margin-bottom: 15px;
+    padding: 15px;
+    width: 1350px;
+  }
+
+  .rep{
+    border: solid; 
+    border-color:#ba9a9a; 
+    border-radius: 4px;
+    margin: 20px;
+    padding: 15px;
+  }
+</style>
+
+<h2>detail of product</h2>
+
+<h3>Product name = <%= @product.name %> </h3>
+<h3>Product price = <%= @product.price %> </h3>
+<h3>Manufacturing Date of product = <%= @product.manufacturing_date %> </h3><br>
+<%#byebug%>
+<%if @product.product_variants.present?%>
+    <h2>Variants of Product : </h2>
+      <% @pv.each do |v|%>
+          <%#= v.variant_id%>
+          <h3><%= Variant.find_by(id: (v.variant_id)).name %> :
+          <%= VariantAttribute.find_by(id: (v.variant_attribute_id)).name %></h3>
+      <%end%>
+<%end%>
+<%if @product.image.present?%>
+   <%= image_tag @product.image %></a>
+<% end %>
+
+<%= link_to "edit page", edit_product_path(@product)%>
+ <a href="<%= home_add_to_cart_path(@product.id) %>"><%= "add to cart"%></a><br><br>
+
+  <% if OrderItem.find_by(product_id: @product.id).present? %>
+    <div>
+      <%= form_with model: [ @product, @product.comments.build] do |f| %>  
+
+        <div>
+          <%= f.hidden_field :product_id, :value => @product.id%>
+              <%# @comment.errors.full_messages_for(:user_id).each do |message| %>
+            <div><%#= message %></div>
+          <%# end %>
+        </div>
+
+        <div>
+          <h4><%= f.label :add_review %>:
+          <%= f.text_area :description %></h4> 
+            <%# @comment.errors.full_messages_for(:description).each do |message| %>
+              <div><%#= message %></div>
+            <%# end %>
+        </div>
+
+        <div>
+          <%= f.submit %>
+        </div>
+
+      <% end %>
+    </div>
+
+
+    <h2>Comments</h2>
+    <% @comments.each do |comment|%>
+        <%if comment.reply_id == nil %>
+            <div class="com">
+                <h3><%= comment.user.name%></h3>
+                <h3><%= comment.description %> </h3><br>
+
+            
+                <div>
+                    <%= form_with model: [ @product, @product.comments.build] do |f| %>  
+                        <div>
+                          <%= f.hidden_field :reply_id, :value => comment.id%>
+                          <%= f.hidden_field :product_id, :value => @product.id%>
+                              <%# @comment.errors.full_messages_for(:user_id).each do |message| %>
+                            <div><%#= message %></div>
+                          <%# end %>
+                        </div>
+
+                        <div>
+                          <h4><%= f.label :reply %>:
+                          <%= f.text_area :description %></h4> 
+                            <%# @comment.errors.full_messages_for(:description).each do |message| %>
+                              <div><%#= message %></div>
+                            <%# end %>
+                        </div>
+
+                        <div>
+                          <%= f.submit "reply" %>
+                        </div>
+                    <% end %>
+                </div>
+
+
+                <div class="rep">
+                  <h2><strong>replies</strong></h2>
+                  <%comment.replies.each do |re| %>
+                      <h3><%= re.user.name%></h3>
+                      <h3><%= re.description %> </h3><br>
+                  <%end%>
+                </div>
+            </div>
+        <%end%>   
+    <% end %>
+  <%end%>
+
+
+
+ 

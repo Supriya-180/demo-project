@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <title>My Website</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <style>
+      body {
+     margin: 4px;
+    }
+        
+      .mess {
+          color: green;
+          }
+
+      .fgh {
+        list-style-type: inline;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        //background-color: #f1f1f1;
+        background-color: #c1c4dc;
+        //position: fixed;
+        height: 10%;
+        overflow: auto;
+
+      }
+
+      .nav {
+        display: block;
+        color: #000;
+        padding: 8px 16px;
+        text-decoration: none;
+        display: inline;
+      }
+
+      .active {
+        background-color: #04AA6D;
+        color: white;
+      }
+
+      #menu:hover:not(.active) {
+        background-color: #555;
+        color: white;
+        
+      }
+
+      #menu:link, #menu:visited{
+        color: #081520;
+        text-decoration: none;
+        padding:20px ;
+        }
+
+    </style>
+  </head>
+
+  <body>
+      <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <p class="navbar-text float-right">
+        <% if user_signed_in? %>
+          <h4 align="right", padding="5px">  
+              Logged in as <strong><%= current_user.email %></strong>
+              <h4 align="right", margin="40px"><%= link_to 'Edit profile ', edit_user_registration_path, :class => 'navbar-link' %>  |
+              <%= link_to "Logout ", destroy_user_session_path, method: :delete, :class => 'navbar-link'%> </h4>
+          </h4>
+                <div class="fgh">
+          <% if current_user.user_type == "merchant"%>
+               <h3 align="left", padding="5px"> 
+                 <a class="nav" class="active" id="menu" href="<%= home_index_path %>"><%= "home"%></a>   
+                 <a class="nav" class="active" id="menu" href="<%= new_product_path %>"><%= "new product"%></a> 
+                 <a class="nav" class="active" id="menu" href="<%= new_variant_path %>"><%= "new variant"%></a> 
+              </h3>
+
+          <%else%>
+              <h3 align="left", padding="5px">   
+                 <a class="nav" class="active" id="menu" href="<%= home_index_path %>"><%= "home"%></a> 
+                 <a class="nav" class="active" id="menu" href="<%= carts_path %>"><%= "show cart"%></a>  
+                 <a class="nav" class="active" id="menu" href="<%= orders_path %>"><%= "my orders"%></a> 
+                 <%#byebug%>
+                 <a class="nav" class="active" id="menu" href="<%= wishlists_path %>"><%= "my wishlist"%></a> 
+              </h3> 
+          <% end%>
+      </div>
+
+        <% else %>
+          <h4>
+              <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %>  |
+              <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+          </h4>
+        <% end %>
+    </p>
+
+
+
+
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+      <%= yield %>
+
+  </body>
+</html>

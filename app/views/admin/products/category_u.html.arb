@@ -1,0 +1,4 @@
+table_for assigns[:product].category do
+  column :name
+  
+end

@@ -1,0 +1,4 @@
+$("#<%= params[:attribute_select_id]%>").empty();
+<% @variant_attributes.each do |attributes| %>
+  $("#<%= params[:attribute_select_id]%>").append('<option value="<%= attributes.id %>"><%= attributes.name%></option>');
+<% end %>

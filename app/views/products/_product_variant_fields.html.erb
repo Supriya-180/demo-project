@@ -1,0 +1,23 @@
+<div class="nested-fields">
+    <%= f.hidden_field :_destroy %>
+    <div>
+    <%= f.label :variant_id %><br>
+    <%= f.select(:variant_id, options_for_select(Variant.all.map{|b| [b.name, b.id]}), {include_blank: true}, {class: 'variant_select'}) %><br>
+
+        <% @product.errors.full_messages_for(:variant_id).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+    <div>
+    <%= f.label :variant_attribute_id %><br>
+    <%= f.select(:variant_attribute_id, options_for_select(VariantAttribute.all.map{|b| [b.name, b.id]}), {include_blank: true}, {class: 'variant_attribute_select'})%><br>
+
+        <% @product.errors.full_messages_for(:variant_attribute_id).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+
+    <div>
+        <%= link_to "Remove", '#', class: "remove_fields" %>
+    </div>
+</div>

@@ -1,0 +1,25 @@
+<h2>detail of product</h2>
+
+<h3>Product name = <%= @product.name %> </h3>
+<h3>Product price = <%= @product.price %> </h3>
+<h3>Manufacturing Date of product = <%= @product.manufacturing_date %> </h3><br>
+<%#byebug%>
+<%if @product.product_variants.present?%>
+    <h2>Variants of Product : </h2>
+      <% @pv.each do |v|%>
+          <%#= v.variant_id%>
+          <h3><%= Variant.find_by(id: (v.variant_id)).name %> :
+          <%= VariantAttribute.find_by(id: (v.variant_attribute_id)).name %></h3>
+      <%end%>
+<%end%>
+<%if @product.image.present?%>
+   <%= image_tag @product.image %></a>
+<% end %>
+
+<%= link_to "edit page", edit_product_path(@product)%>
+ <a href="<%= home_add_to_cart_path(@product.id) %>"><%= "add to cart"%></a><br><br>
+
+
+
+
+
