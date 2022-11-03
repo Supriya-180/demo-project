@@ -1,9 +1,5 @@
 class HomeController < ApplicationController
 	def index
-    # if params[:razorpay_order_id] && params[:payment_id].present?
-    #   order = current_user.orders.find_by(razorpay_order_id: params[:razorpay_order_id])
-    #   order.update(razorpay_order_id: params[:razorpay_order_id]) if order.present?
-    # end
 		if current_user.user_type == "merchant"
             @products = current_user.products
         else

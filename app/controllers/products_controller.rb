@@ -23,6 +23,28 @@ class ProductsController < ApplicationController
       # byebug
       @product = Product.find(params[:id])
     end
+    
+
+    def like
+      # byebug
+      comment = Comment.find_by(id: params[:product_id]) 
+      if current_user.likes.where(likeable_id: params[:product_id], likeable_type: "Comment").present?
+        # byebug
+        like = comment.likes.find_by(user_id: current_user.id)
+        like.destroy
+          # byebug
+        comment=Comment.find_by(params[:id])
+        product = comment.product_id
+        redirect_to product_path(product)
+      else
+        like = comment.likes.new(user_id: current_user.id)
+        if like.save
+          comment=Comment.find_by(params[:id])
+          product = comment.product_id
+          redirect_to product_path(product)
+        end
+      end
+    end
 
     def update
       # byebug

@@ -20,6 +20,7 @@ require("./nested-forms/removeFields");
 // require("./nested-forms/dropDown"); //use for dependent dropdown, but didn't work
 
 
+
 $(document).on('turbolinks:load', function(){
 	$(document).on('change', '.variant_select', function(){
         $.ajax({
