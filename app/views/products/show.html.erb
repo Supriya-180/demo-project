@@ -73,6 +73,15 @@
                 <h3><%= comment.user.name%></h3>
                 <h3><%= comment.description %> </h3><br>
 
+                  <% if current_user.likes.where(likeable_id: comment.id, likeable_type: "Comment").present?%>
+                      <%= link_to product_like_path(comment.id), method: :post do%>
+                        <h3 style="margin-left: 2px;margin-top: -9px;"><%= image_tag "/assets/like_comment333.png", :size => "30x30" %></h3>
+                      <%end%>
+                  <%else%>
+                      <%= link_to product_like_path(comment.id), method: :post do%>
+                        <h3 style="margin-left: 5px;margin-top: -9px;"><%= image_tag "/assets/like_comment33.png", :size => "27x27" %></h3>
+                      <%end%>
+                  <%end%>
             
                 <div>
                     <%= form_with model: [ @product, @product.comments.build] do |f| %>  
@@ -104,8 +113,19 @@
                   <%comment.replies.each do |re| %>
                       <h3><%= re.user.name%></h3>
                       <h3><%= re.description %> </h3><br>
+                      <% if current_user.likes.where(likeable_id: re.id, likeable_type: "Comment").present?%>
+                        <%= link_to product_like_path(re.id), method: :post do%>
+                            <h3 style="margin-left: 2px;margin-top: -9px;"><%= image_tag "/assets/like_comment333.png", :size => "30x30" %></h3>
+                        <%end%>
+                      <%else%>
+                        <%= link_to product_like_path(re.id), method: :post do%>
+                          <h3 style="margin-left: 2px;margin-top: -9px;"><%= image_tag "/assets/like_comment33.png", :size => "27x27" %></h3>
+                        <%end%>
+                      <%end%>
                   <%end%>
                 </div>
+
+                
             </div>
         <%end%>   
     <% end %>

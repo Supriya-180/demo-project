@@ -18,6 +18,7 @@ class OrdersController < ApplicationController
    end
 
    def update
+      # byebug
       order = Order.find_by(id: params[:id])
       if order.present?
          payment_response = {razorpay_order_id: params[:razorpay_order_id], razorpay_payment_id: params[:razorpay_payment_id], razorpay_signature: params[:razorpay_signature] }

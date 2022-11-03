@@ -1,4 +1,15 @@
-
+<% if user_signed_in? %>
+          <h4 align="right", padding="5px">  
+              Logged in as <strong><%= current_user.email %></strong>
+              <h4 align="right", margin="40px"><%= link_to 'Edit profile ', edit_user_registration_path, :class => 'navbar-link' %>  |
+              <%= link_to "Logout ", destroy_user_session_path, method: :delete, :class => 'navbar-link'%> </h4>
+          </h4>
+<% else %>
+          <h4>
+              <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %>  |
+              <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+          </h4>
+<% end %>
 <h3 class="mess"><%= flash[:message]%></h3>
 <h3 class="mess"><%= flash[:wishlist]%></h3>
 
