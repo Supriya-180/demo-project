@@ -2,7 +2,7 @@ module Api
     module V1
             class HomeController < ApiController
                 def index
-                    byebug
+                    # byebug
                     if current_user.user_type == "merchant"
                         @products = current_user.products
                         render json: @products
@@ -42,23 +42,25 @@ module Api
                     
 
                 def add_to_cart
-                    cart = Cart.find_or_create_by(user_id: current_user.id)
-                    if cart.present?
-                       product = Product.find_by(id: params[:home_id])
-                       if cart.cart_items.find_by(product_id: product.id).present?
-                            flash[:message]="Product is already in cart" 
-                            redirect_to home_index_path
-                            return
+                    if current_user.user_type != "merchant"
+                        cart = Cart.find_or_create_by(user_id: current_user.id)
+                        if cart.present?
+                           product = Product.find_by(id: params[:home_id])
+                           if product != nil
+
+                                if cart.cart_items.find_by(product_id: product.id).present?
+                                    return render json: {meta: {message: 'prodct is already in cart'}}
+                                end
+                               
+                               cart_item = cart.cart_items.new(product_id: product.id, total_price: product.price, product_quantity: 1)
+
+                                    if cart_item.save
+                                        render json: {meta: {message: 'Product added to cart...'}}
+                                    end
+                            else
+                                render json: {meta: {message: 'Product not found'}}
+                            end
                         end
-                       cart_item = cart.cart_items.new(product_id: product.id, total_price: product.price, product_quantity: 1)
-
-                       if cart_item.save
-                            flash[:message] = "Product added to cart..."
-                            redirect_to home_index_path
-                       else
-                            flash[:alert] = "product not saved!!"  
-                       end
-
                     end
                 end
 

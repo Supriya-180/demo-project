@@ -2,47 +2,83 @@ module Api
     module V1
 
         class ProductsController < ApiController
+              def index
+                # byebug
+                if current_user.user_type == "merchant"
+                    @products = current_user.products
+                    render json: @products
+
+                else
+                    @products = Product.all
+                    render json: @products
+                end
+              end
+
 
         	  def show 
-              @product = Product.find(params[:id])
-              @pv = @product.product_variants
-              @comments = Comment.where(product_id: params[:id])
-              render json: @product
-            end
+              if current_user.user_type == "merchant"
+                # byebug
+                @product = current_user.products.find_by_id(params[:id])
+              else
+                @product = Product.find(params[:id])
 
-            def new 
-              @product = current_user.products.new
+              end
               render json: @product
             end
 
             def create
-            	@product = current_user.products.new(product_params)
-            	if @product.save
-            		render json: @product
-            	else 
-            		render json: @product
-            	end
+              # byebug
+              if current_user.user_type == "merchant"
+              	@product = current_user.products.new(product_params)
+              	if @product.save
+              		# render json: @product  
+                  render json: {data: serilized_product(@product), meta: { message: 'Product added' }}
+
+                  # image = @product.image.present? ? Rails.application.routes.url_helpers.rails_blob_url(@product.image) : nil
+                  # render json: @product.as_json.merge(image: image)
+              	else 
+              		render json: {errors: @product.errors.full_messages}
+              	end
+              else
+                render json: {errors: "not authorised"}
+              end
             end
 
-            def edit
-              # byebug
-              @product = Product.find(params[:id])
+
+            def serilized_product product
+              Api::V1::ProductSerializer.new(product)
             end
+
+
+            # def edit
+            #   # byebug
+            #   @product = Product.find(params[:id])
+            # end
 
             def update
-              # byebug
-              @product = Product.find(params[:id])
-              if @product.update(product_params)
-                render json: @product
+              if current_user.user_type == "merchant"
+                  @product = current_user.products.find(params[:id])
+                  if @product.update(product_params)
+                    render json: {data: @product, meta: { message: 'Product updated' }}
+                  else
+                    render json: {errors: @product.errors.full_messages} 
+                  end
               else
-                render json: @product 
+                render json: {errors: "not authorised"}
               end
             end
 
             def destroy
-                @product = Product.find(params[:id])
-                @product.destroy
-                render json: @product
+              if current_user.user_type == "merchant"
+                # byebug
+                  @product = current_user.products.find_by_id(params[:id])
+                  if @product.present?
+                    @product.destroy
+                    render json: {data: @product, meta: {message: 'prodct Deleted'}}
+                  else
+                    render json: {meta: { message: 'Product not found' } }
+                  end
+              end
             end
 
             def options_for_variant
@@ -59,3 +95,8 @@ module Api
         end
     end
 end
+
+                
+
+
+# Rails.application.routes.url_helpers.rails_blob_url(Product.last.image)#, only_path: true)
