@@ -29,13 +29,17 @@ end
       end
     end
 
-    namespace :api do
-      namespace :v1 do 
+    namespace :api, constraints: { format: :json } do
+      namespace :v1, constraints: { format: :json } do 
         resources :products do 
           resources :comments
           collection do 
             get :options_for_variant
           end
+        end
+        resources :carts do 
+          post "/update_cart", to: "carts#update_cart"
+          delete "/destroy_cart_item", to: "carts#destroy_cart_item", on: :member
         end
       end
     end

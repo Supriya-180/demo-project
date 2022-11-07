@@ -13,7 +13,7 @@
             if resource.save
               token = resource.generate_jwt
               # byebug
-              # resource.merge(meta: { message: 'Sign up success', token: token })
+              # render resource.merge(meta: { message: 'Sign up success', token: token })
               render :json => {user: serialized_user(resource), meta: { message: 'Sign up success', token: token }}, :status => :created
             else
               render json: { errors: resource.errors.full_messages }, :status => :unprocessable_entity
