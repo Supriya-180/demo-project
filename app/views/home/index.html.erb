@@ -49,7 +49,7 @@
         <%#byebug%>
             <% if current_user.likes.where(likeable_id: hommme.id, likeable_type: "Product").present?%>
                 <%= link_to home_like_path(hommme.id), method: :post do%>
-                    <h3 style="margin-left: 201px;"><%= image_tag "/assets/harry.jpeg", :size => "30x30" %></h3>
+                    <h3 style="margin-left: 201px;"><%= image_tag "/assets/like.png", :size => "30x30" %></h3>
                 <%end%>
             <%else%>
                 <%= link_to home_like_path(hommme.id), method: :post do%>
