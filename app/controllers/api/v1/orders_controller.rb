@@ -5,11 +5,12 @@ module Api
 			   Razorpay.setup('rzp_test_sGKFWWIENwCHjV', 'EX65NY1GAg5e6mTzJGJmoBE6')
 
 			   def index
-			   		# byebug
-			 		@order_items = current_user.order_items
-			      	@orders = current_user.orders
-			      	render json: @orders
-			      	# render json: @order_items
+			   		if current_user.user_type != "merchant"
+				 		@order_items = current_user.order_items
+				      	@orders = current_user.orders
+				      	render json: @orders
+			      		# render json: @order_items
+			      	end
 			   end
 
 			   def show_order_item
