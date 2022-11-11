@@ -2,6 +2,7 @@ module Api
     module V1
 
         class ProductsController < ApiController
+          before_action :authenticate_user!
               def index
                 # byebug
                 if current_user.user_type == "merchant"

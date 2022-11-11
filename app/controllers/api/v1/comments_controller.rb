@@ -27,32 +27,3 @@ module Api
 
 	end
 end
-
-
-# module Api
-# 	module V1
-
-# 			class CommentsController < ApiController
-
-# 				def create
-# 					@comment = current_user.comments.new(comment_Params)
-# 					# byebug
-# 					if @comment.save
-# 						render json: @comment
-# 					else
-# 						render json: {meta: {message: 'ccvxcv'}}
-# 					end
-# 				end
-
-# 				def show
-# 					@comment = Comment.where(product_id: params[:id])
-
-# 				end
-
-# 			    def comment_Params
-# 			      params.permit(:user_id, :product_id, :description, :reply_id)
-# 			    end
-# 			end
-
-# 	end
-# end

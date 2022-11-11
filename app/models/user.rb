@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  
   has_one :cart, dependent: :destroy
   has_many :products, dependent: :destroy
   has_many :orders, dependent: :destroy
@@ -16,8 +17,7 @@ class User < ApplicationRecord
 
 
   def generate_jwt
-    # byebug
-    JWT.encode({id: id, exp: 60.days.from_now.to_i}, Rails.application.secrets.secret_key_base)
+    JWT.encode({id: id, exp: 24.minutes.from_now.to_i}, ENV["devise_jwt_secret"])
   end
 
   VALID_USERS = ['merchant', 'customer']
