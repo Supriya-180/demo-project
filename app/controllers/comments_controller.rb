@@ -29,5 +29,3 @@ class CommentsController < ApplicationController
       params.require(:comment).permit(:user_id, :product_id, :description, :reply_id)
     end
 end
-
-# , replies_attributes: [:description, :_destroy, replies_attributes: [:description, :_destroy, ]]

@@ -7,7 +7,7 @@ class Comment < ApplicationRecord
 
 
     belongs_to :reply, class_name: "Comment", optional: true
-    accepts_nested_attributes_for :replies, allow_destroy: true
+    # accepts_nested_attributes_for :replies, allow_destroy: true
 
 
     validates :description, presence: true 

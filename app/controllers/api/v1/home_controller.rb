@@ -20,13 +20,11 @@ module Api
                     if current_user.likes.where(likeable_id: params[:home_id], likeable_type: "Product").present?
                         like = product.likes.find_by(likeable_id: params[:home_id])
                         like.destroy
-                        flash[:wishlist] = "Product deleted from wishlist..."
-                        redirect_to home_index_path
+                        render json: {meta: {message: 'Product deleted from wishlist...'}}
                     else
                         like = product.likes.new(user_id: current_user.id)
                         if like.save
-                            flash[:wishlist] = "Product added to wishlist..."
-                            redirect_to home_index_path
+                            render json: {meta: {message: 'Product added to wishlist...'}}
                         end        
                     end
                 end

@@ -14,6 +14,20 @@ module Api
                 end
               end
 
+              def like
+                comment = Comment.find_by(product_id: params[:product_id]) 
+                if current_user.likes.where(likeable_id: comment.id, likeable_type: "Comment").present?
+                  like = comment.likes.find_by(user_id: current_user.id)
+                  like.destroy
+                    # byebug
+                  render json: {meta: {message: 'unliked!!!'}}
+                else
+                  like = comment.likes.new(user_id: current_user.id)
+                  if like.save
+                    render json: {meta: {message: 'liked!!!'}}
+                  end
+                end
+              end
 
         	  def show 
               if current_user.user_type == "merchant"
@@ -49,11 +63,6 @@ module Api
               Api::V1::ProductSerializer.new(product)
             end
 
-
-            # def edit
-            #   # byebug
-            #   @product = Product.find(params[:id])
-            # end
 
             def update
               if current_user.user_type == "merchant"
