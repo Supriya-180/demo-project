@@ -5,7 +5,7 @@ class VariantsController < ApplicationController
 
     def create
     	@variant = Variant.new(variant_params)
-# byebug
+
     	if @variant.save
     		redirect_to home_index_path(@variant.id)
     	else 

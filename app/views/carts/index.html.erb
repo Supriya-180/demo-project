@@ -57,7 +57,7 @@
         <% @addresses.each do |address| %>
             <h4>
                 <%= form.radio_button :address_id, address.id %> 
-                <label><%= address.flat_no %>, <%= address.colony %>,  <%= address.landmark %>, <%= address.city %>, <%= address.pin_Code %></label>
+                <label><%= address.flat_no %>, <%= address.colony %>,  <%= address.landmark %>, <%= address.city %>, <%= address.pin_code %></label>
             </h4>
         <% end %>
         <%= form.submit  "place order"%>
