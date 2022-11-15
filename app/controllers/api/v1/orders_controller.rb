@@ -1,6 +1,8 @@
 module Api
 	module V1
 		class OrdersController < ApiController
+                before_action :authenticate_user!
+
 			   respond_to :js, :json, :html
 			   Razorpay.setup('rzp_test_sGKFWWIENwCHjV', 'EX65NY1GAg5e6mTzJGJmoBE6')
 
@@ -57,13 +59,14 @@ module Api
 			            end
 
 			            if @order.save
-			               cart.cart_items.delete_all 
-			               cart.update(total_price: 0, total_quantity: 0)
-			               # cart.cart_items.destroy 
-			               order = Razorpay::Order.create(amount: price.to_i, currency: 'INR', receipt: 'TEST')
-			               # order = Razorpay::Order.create amount: price.to_i, currency: 'INR', receipt: 'TEST'
-			               @order.update(razorpay_order_id: order.id) #status created
-			               render json: {meta: {message: 'order placed'}}
+			               	cart.cart_items.delete_all 
+			               	cart.update(total_price: 0, total_quantity: 0)
+			            	OrderMailer.order_confirmed(@order).deliver_now
+			               	# cart.cart_items.destroy 
+			               	order = Razorpay::Order.create(amount: price.to_i, currency: 'INR', receipt: 'TEST')
+			               	# order = Razorpay::Order.create amount: price.to_i, currency: 'INR', receipt: 'TEST'
+			               	@order.update(razorpay_order_id: order.id) #status created
+			               	render json: {meta: {message: 'order placed'}}
 			            end
 			         else
 			            render json: {meta:{message: 'nothing in cart'}}

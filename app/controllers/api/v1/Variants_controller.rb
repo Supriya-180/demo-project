@@ -1,6 +1,7 @@
 module Api
   module V1
       class VariantsController < ApiController
+          before_action :authenticate_user!
 
           def create
             if current_user.user_type == "merchant"

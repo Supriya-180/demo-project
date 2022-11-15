@@ -8,6 +8,8 @@ class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
       build_resource(sign_up_params)   # resource = User.new(sign_up_params)
       # byebug
       if resource.save
+        # byebug
+        UserMailer.welcome_email(resource).deliver_now
         token = resource.generate_jwt
         # byebug
         # render resource.merge(meta: { message: 'Sign up success', token: token })

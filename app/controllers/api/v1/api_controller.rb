@@ -22,7 +22,7 @@ module Api
 			    	jwt_payload = JWT.decode(params[:token], ENV["devise_jwt_secret"]).first
 			        @current_user_id = jwt_payload['id']
 			    else
-			    	render json: {message: 'Sign up success'}, status: :unprocessable_entity
+			    	render json: {message: 'Not authorized'}, status: :unprocessable_entity
 			    end
 			  end
 
@@ -32,6 +32,7 @@ module Api
 			  end
 
 			  def current_user
+			  	# byebug
 			    @current_user = User.find_by_id(@current_user_id)
 			  end
 
