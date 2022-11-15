@@ -3,6 +3,8 @@ module Api
 
 			class CommentsController < ApiController
 
+                before_action :authenticate_user!
+
 				def create
 					@product = Product.find_by_id(params[:product_id])
 					@comment = current_user.comments.new(comment_Params)

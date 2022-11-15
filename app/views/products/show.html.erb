@@ -68,7 +68,7 @@
 
     <h2>Comments</h2>
     <% @comments.each do |comment|%>
-        <%# if comment.reply_id == nil %>
+        <% if comment.reply_id == nil %>
             <div class="com">
                 <h3><%= comment.user.name%></h3>
                 <h3><%= comment.description %> </h3><br>
@@ -127,7 +127,7 @@
 
                 
             </div>
-        <%# end%>   
+        <% end%>   
     <% end %>
   <%end%>
 

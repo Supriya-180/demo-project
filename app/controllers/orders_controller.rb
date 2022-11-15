@@ -25,6 +25,7 @@ class OrdersController < ApplicationController
          verify_result = Razorpay::Utility.verify_payment_signature(payment_response)
          if verify_result
             order.update(razorpay_payment_id: params[:razorpay_payment_id], status: "paymentcompleted") #status payment_completed
+            OrderMailer.order_confirmed(order).deliver_now
          else
             flash[:error] = "something went wrong!!!" 
             redirect_to orders_path

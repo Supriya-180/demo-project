@@ -17,7 +17,7 @@ class User < ApplicationRecord
 
 
   def generate_jwt
-    JWT.encode({id: id, exp: 24.minutes.from_now.to_i}, ENV["devise_jwt_secret"])
+    JWT.encode({id: id, exp: 2.hours.from_now.to_i}, ENV["devise_jwt_secret"])
   end
 
   VALID_USERS = ['merchant', 'customer']
@@ -40,6 +40,12 @@ class User < ApplicationRecord
     def password_check
       return if password&.match(/\A(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[@#$%^&+=])(?=.*\W)[^ ]{8,}\z/)
       errors.add :password, ' Password must contain 1 uppercasse , 1 lowercase, 1 Special character, 1 digit '
+    end
+
+    after_create :mailer_letter
+
+    def mailer_letter
+
     end
 end
 

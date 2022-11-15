@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+
+    <%if @order.status == 'created' %>
+        <h1>Your order successfully created........</h1>
+        <p>
+          You have successfully signed up to example.com,
+        </p>
+        
+        <p>Thanks for joining and have a great day!</p>
+    <%elsif @order.status == 'paymentcompleted'%>
+        <h1>ordered successfully </h1>
+
+        <p>Thanks for joining and have a great day!</p>
+    <%end%>
+
+  </body>
+</html>
