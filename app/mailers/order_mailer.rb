@@ -1,6 +1,7 @@
 class OrderMailer < ApplicationMailer
 	
 	  def order_confirmed order
+	  	# byebug
 	    @order = order
 	    @url  = 'http://localhost:3000/api/v1/users'
 	    if @order.status == 'created'

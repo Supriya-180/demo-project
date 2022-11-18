@@ -3,6 +3,6 @@ class Order < ApplicationRecord
 	has_many :order_items, dependent: :destroy
 	belongs_to :address
 
-	enum status: [:created, :paymentcompleted, :cancelled]
+	enum status: [:created, :paymentcompleted, :cancelled, :refunded]
 
 end

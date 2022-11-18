@@ -5,6 +5,7 @@ class VariantsController < ApplicationController
 
     def create
     	@variant = Variant.new(variant_params)
+      @variant_attributes = @variant.variant_attributes
 
     	if @variant.save
     		redirect_to home_index_path(@variant.id)

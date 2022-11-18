@@ -15,17 +15,21 @@ module Api
 
 
                 def like  
-                    product = Product.find_by(id: params[:home_id])
-                    # byebug
-                    if current_user.likes.where(likeable_id: params[:home_id], likeable_type: "Product").present?
-                        like = product.likes.find_by(likeable_id: params[:home_id])
-                        like.destroy
-                        render json: {meta: {message: 'Product deleted from wishlist...'}}
+                    if current_user != 'merchant'
+                        product = Product.find_by(id: params[:home_id])
+                        # byebug
+                        if current_user.likes.where(likeable_id: params[:home_id], likeable_type: "Product").present?
+                            like = product.likes.find_by(likeable_id: params[:home_id])
+                            like.destroy
+                            render json: {meta: {message: 'Product deleted from wishlist...'}}
+                        else
+                            like = product.likes.new(user_id: current_user.id)
+                            if like.save
+                                render json: {meta: {message: 'Product added to wishlist...'}}
+                            end        
+                        end
                     else
-                        like = product.likes.new(user_id: current_user.id)
-                        if like.save
-                            render json: {meta: {message: 'Product added to wishlist...'}}
-                        end        
+                        render json: {message: 'not authorised'}
                     end
                 end
 
