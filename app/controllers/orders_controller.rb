@@ -6,6 +6,7 @@ class OrdersController < ApplicationController
    Razorpay.setup('rzp_test_sGKFWWIENwCHjV', 'EX65NY1GAg5e6mTzJGJmoBE6')
 
  	def index
+      # byebug
  		@order_items = current_user.order_items
       @orders = current_user.orders
    end
@@ -25,7 +26,8 @@ class OrdersController < ApplicationController
          verify_result = Razorpay::Utility.verify_payment_signature(payment_response)
          if verify_result
             order.update(razorpay_payment_id: params[:razorpay_payment_id], status: "paymentcompleted") #status payment_completed
-            OrderMailer.order_confirmed(order).deliver_now
+            # byebug   
+            OrderMailer.order_confirmed(order,).deliver_now
          else
             flash[:error] = "something went wrong!!!" 
             redirect_to orders_path
@@ -36,8 +38,18 @@ class OrdersController < ApplicationController
 
    def cancel_order
       # byebug
-      @order = Order.find(params[:id])
-      @order.update(status: "cancelled")    #status canceled 
+      @order = Order.find_by_id(params[:id])
+      # return redirect_to orders_path unless @order.present?
+      if @order.status == "paymentcompleted" 
+         refund = RefundPayment.new(@order).refund_payment
+         @order.update(status: "refunded", razorpay_refund_id: refund.id)    #status canceled 
+      elsif @order.status != "refunded" #or 
+         @order.update(status: "cancelled")
+      # byebug
+      elsif @order.status == "created"
+         @order.update(status: "cancelled")
+      end
+
       redirect_to orders_path
    end
 

@@ -6,16 +6,18 @@
   <body>
 
     <%if @order.status == 'created' %>
-        <h1>Your order successfully created........</h1>
-        <p>
-          You have successfully signed up to example.com,
-        </p>
+        <h2>Your order successfully created..</h2>
+        <h5>Ready for payment</h5>
         
         <p>Thanks for joining and have a great day!</p>
     <%elsif @order.status == 'paymentcompleted'%>
-        <h1>ordered successfully </h1>
+        <h2>ordered successfully </h2>
+         <%#byebug%>
+          <h4><%= @order.id %><h4>
+          <h4><%= @order.total_price %></h4>
+          <h4><%= @order.total_quantity %></h4>
 
-        <p>Thanks for joining and have a great day!</p>
+        <h3>Thanks for order, have a nice day!</h3>
     <%end%>
 
   </body>

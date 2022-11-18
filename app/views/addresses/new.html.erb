@@ -4,8 +4,8 @@
 
   <div>
     <%= f.label :pin_Code %><br>
-    <%= f.text_field :pin_Code %>
-    <% @address.errors.full_messages_for(:pin_Code).each do |message| %>
+    <%= f.text_field :pin_code %>
+    <% @address.errors.full_messages_for(:pin_code).each do |message| %>
         <div><%= message %></div>
     <% end %>
   </div>

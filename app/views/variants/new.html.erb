@@ -3,22 +3,33 @@
 
 <%= form_with model: @variant, method: "post" do |f| %>
   <div>
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-    
-    <fieldset>
-        <legend>variant_attributes:</legend>
-        <%= f.fields_for :variant_attributes do |variant_form| %>
-            <%= render "variant_attributes_fields", f: variant_form %> 
-        <% end %>
-        <%= link_to_add_fields "Add variant_attributes", f, :variant_attributes %>
-    </fieldset>
+      <%= f.label :name %><br>
+      <%= f.text_field :name %>
+      <% @variant.errors.full_messages_for(:name).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+      
+      <fieldset>
+          <legend>variant_attributes:</legend>
+          <%= f.fields_for :variant_attributes do |variant_form| %>
+              <%= render "variant_attribute_fields", f: variant_form %> 
+          <%#byebug%>
+                    <% @variant_attributes.each do |message| %>
+                        <div><%= message.errors.full_messages_for(:name) %></div>
+                    <% end %>
+          <% end %>
+          <%= link_to_add_fields "Add variant_attributes", f, :variant_attributes %>
+      </fieldset>
+
   </div>
 
   <div>
     <%= f.submit %>
-    <%# if params[:action] === "edit" && params[:controller] === "authors" %>
-        <%#= link_to "Delete Person", assembly_path(@assemblies), method: :delete, data: { confirm: "Are You Sure?" } %>
-    <%# end %>
   </div>
 <% end %>
+
+
+
+<!-- @client.tasks.each do |t|
+  puts t.errors.full_messages.inspect
+end -->

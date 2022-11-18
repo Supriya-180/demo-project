@@ -71,10 +71,14 @@ gem 'jwt'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
-
 gem 'devise-jwt'
 gem 'rack-cors'
 
 gem 'active_model_serializers'
 
 gem "letter_opener", group: :development
+
+gem "active_storage_base64"
+
+gem 'wicked_pdf'
+
