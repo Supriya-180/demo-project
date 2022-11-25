@@ -16,7 +16,10 @@ Rails.application.routes.draw do
           sign_out: 'logout',
           registration: 'signup'
         }
-        resources :users
+        resources :users do 
+          put "/otp_varify", to: "users#otp_varify", on: :collection
+          put "/otp_varify_email", to: "users#otp_varify_email", on: :collection
+        end
       end
     end
 

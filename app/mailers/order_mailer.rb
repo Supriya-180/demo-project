@@ -3,14 +3,8 @@ class OrderMailer < ApplicationMailer
 	  def order_confirmed order
 	  	# byebug
 	    @order = order
-	    @url  = 'http://localhost:3000/api/v1/users'
-	    if @order.status == 'created'
-	   		mail(to: @order.id, subject: 'Order created...')
-	   	end
-
-	    if @order.status == 'paymentcompleted'
-	   		mail(to: @order.id, subject: 'Ordered Successfully')
-	   	end
-
+	    	# byebug
+	    	attachments["order_invoice_#{@order.id}.pdf"] = WickedPdf.new.pdf_from_string(render_to_string(template: '/orders/invoice.html.erb', layout: false))
+	   		mail(to: 'supriyas@witmates.com', subject: 'Ordered Successfully')
 	  end
 end

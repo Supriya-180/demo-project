@@ -1,9 +1,10 @@
 class HomeController < ApplicationController
 	def index
 		if current_user.user_type == "merchant"
-            @products = current_user.products
+            # @products = current_user.products
+            @products = current_user.products.paginate(:page => params[:page], :per_page =>params[:per_page])
         else
-            @products = Product.all
+            @products = Product.paginate(:page => params[:page], :per_page => params[:per_page])
         end
 	end
 

@@ -74,3 +74,5 @@ class ProductsController < ApplicationController
         product_variants_attributes: [:id, :variant_id, :variant_attribute_id, :_destroy])
     end
 end
+
+

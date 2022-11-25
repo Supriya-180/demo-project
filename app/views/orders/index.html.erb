@@ -34,7 +34,7 @@
           <h4> product id = <%= order_item.product_id%><br></h4>
           <h4>name = <%= order_item.product.name%></h4>
           <h4>product_quantity =<%= order_item.product_quantity%></h4>
-          <h3>created_at =<%= order_item.created_at%></h3>
+          <h3>created_at =<%= order_item.created_at.strftime("%m-%d-%Y at %I:%M%p")%></h3>
           <h3><strong>status = <%= order_item.order.status%></strong></h3>
           <%#byebug%>
            
@@ -49,6 +49,7 @@
           <%end%>
         </div><br>
 <%end%>
+
 
   
 

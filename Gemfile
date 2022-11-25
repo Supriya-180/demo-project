@@ -82,3 +82,8 @@ gem "active_storage_base64"
 
 gem 'wicked_pdf'
 
+gem 'wkhtmltopdf-binary'
+
+gem 'twilio-ruby'
+
+gem 'will_paginate'
