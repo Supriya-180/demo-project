@@ -20,16 +20,18 @@ class OrdersController < ApplicationController
 
    def update
       # byebug
-      order = Order.find_by(id: params[:id])
-      if order.present?
+      # @order_items = current_user.order_items
+      @order = Order.find_by(id: params[:id])
+      if @order.present?
          payment_response = {razorpay_order_id: params[:razorpay_order_id], razorpay_payment_id: params[:razorpay_payment_id], razorpay_signature: params[:razorpay_signature] }
          verify_result = Razorpay::Utility.verify_payment_signature(payment_response)
          if verify_result
-            order.update(razorpay_payment_id: params[:razorpay_payment_id], status: "paymentcompleted") #status payment_completed
+            @order.update(razorpay_payment_id: params[:razorpay_payment_id], status: "paymentcompleted") #status payment_completed
             # byebug   
-            OrderMailer.order_confirmed(order,).deliver_now
+            OrderMailer.order_confirmed(@order, ).deliver_now
+            redirect_to orders_path
          else
-            flash[:error] = "something went wrong!!!" 
+            flash[:error] = "something went wrong!!!"
             redirect_to orders_path
          end
       end
@@ -49,7 +51,6 @@ class OrdersController < ApplicationController
       elsif @order.status == "created"
          @order.update(status: "cancelled")
       end
-
       redirect_to orders_path
    end
 

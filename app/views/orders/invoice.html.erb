@@ -1,0 +1,59 @@
+<style>
+  #button {
+  color: black;
+  background-color: lightblue;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: left;
+  text-align: left;
+  height: 2em;
+  width: 7em;
+  font-size: medium;
+  font-weight: 60;
+  //margin: 3px;
+  text-decoration: none;
+  padding: 5px;
+}
+
+</style>
+<center>	<h2>your order</h2>   
+
+  
+  
+
+<br><br>
+
+ <!-- @order.order_items.first.product.price -->
+
+<table  style="width:60%">
+      <tr>
+        <th>Image </th>
+        <th>price </th>
+        <th>name </th>
+        <th> product_quantity </th>
+        <th> total_price </th>
+      </tr>
+
+      <tr>
+        <% @order.order_items.each do |order_item| %>
+        <td><%= image_tag order_item.product.image if order_item.product.image %></td>
+        <td><%= order_item.product.price %></td>
+        <td><%= order_item.product.name %></td>
+        <td><%= order_item.product_quantity %></td>
+        <td><%= order_item.total_price %><td>
+      </tr>
+			
+        <%end%>
+      
+</table>
+	    <%#byebug%>
+	       
+	 <hr>
+	 	<div class="column">
+		  	<h4>total price  = <%= @order.total_price/100%> &nbsp; &nbsp; &nbsp;
+		  	total quantity = <%= @order.total_quantity%></h4>
+		</div>
+     
+    
+</center>

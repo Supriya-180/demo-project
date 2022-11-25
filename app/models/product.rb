@@ -23,4 +23,6 @@ class Product < ApplicationRecord
     validates :manufacturing_date, presence: true
     validates :price, numericality: { only_integer: true }
 
+    self.per_page = 3
+
 end

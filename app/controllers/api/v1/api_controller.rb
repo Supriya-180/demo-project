@@ -36,6 +36,15 @@ module Api
 			    @current_user = User.find_by_id(@current_user_id)
 			  end
 
+			  def account_activated!
+			  	# byebug
+			    if current_user.activate?
+			    	current_user
+			    else
+			    	render json: {message: 'please activate your account'}, status: :unprocessable_entity
+			    end
+			  end
+
 			# check that authenticate_user has successfully returned @current_user_id (user is authenticated)
 			  def signed_in?
 			  	# byebug

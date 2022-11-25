@@ -63,6 +63,8 @@ module Api
                                 render json: {meta: {message: 'Product not found'}}
                             end
                         end
+                    else
+                        render json: {message: "you are not authorised"}
                     end
                 end
 

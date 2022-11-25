@@ -6,11 +6,12 @@ module Api
               def index
                 # byebug
                 if current_user.user_type == "merchant"
-                    @products = current_user.products
+                    # @products = current_user.products
+                    @products = current_user.products.paginate(:page => params[:page], :per_page =>params[:per_page]).order('created_at DESC')
                     render json: @products
 
                 else
-                    @products = Product.all
+                    @products = Product.paginate(:page => params[:page], :per_page => params[:per_page]).order('created_at DESC')
                     render json: @products
                 end
               end

@@ -17,16 +17,6 @@ module Api
 					end
 				end
 
-				def show
-					@comment = Comment.where(product_id: params[:id])
-				end
-
-				def destroy
-					byebug
-					@comment = current_user.comments
-					
-				end
-
 			    def comment_Params
 			      params.require(:comment).permit(:user_id, :product_id, :description, :reply_id)
 			    end

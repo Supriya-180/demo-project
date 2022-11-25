@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_17_051013) do
+ActiveRecord::Schema.define(version: 2022_11_24_103704) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -115,6 +115,15 @@ ActiveRecord::Schema.define(version: 2022_11_17_051013) do
     t.index ["reply_id"], name: "index_comments_on_reply_id"
   end
 
+  create_table "email_otps", force: :cascade do |t|
+    t.integer "pin"
+    t.string "email"
+    t.boolean "activate", default: false
+    t.datetime "valid_until"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "jwt_denylist", force: :cascade do |t|
     t.string "jti", null: false
     t.datetime "exp", null: false
@@ -178,6 +187,15 @@ ActiveRecord::Schema.define(version: 2022_11_17_051013) do
     t.index ["category_id"], name: "index_products_on_category_id"
   end
 
+  create_table "sms_otps", force: :cascade do |t|
+    t.integer "pin"
+    t.integer "phone_number"
+    t.boolean "activate", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "valid_until"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -191,6 +209,7 @@ ActiveRecord::Schema.define(version: 2022_11_17_051013) do
     t.boolean "validity"
     t.string "user_type"
     t.integer "phone_number"
+    t.boolean "activate", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
